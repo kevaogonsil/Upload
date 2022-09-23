@@ -1,0 +1,53 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Upload.aspx.cs" Inherits="WebApplication1.Upload" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:Label ID="Label1" runat="server" Text="Upload de arquivo"></asp:Label>
+            <br />
+            <asp:FileUpload ID="fuArquivo" runat="server" />
+            <br />
+            Nome do arquivo<asp:TextBox ID="txbNome" runat="server" Width="135px"></asp:TextBox>
+            <br />
+            Tamanho do arquivo<asp:TextBox ID="txbTamanho" runat="server"></asp:TextBox>
+            <br />
+            <asp:Button ID="btEnviar" runat="server" OnClick="btEnviar_Click" Text="Enviar Arquivo" />
+        </div>
+    </form>
+</body>
+</html>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace WebApplication1
+{
+    public partial class Upload : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btEnviar_Click(object sender, EventArgs e)
+        {
+            String nome = fuArquivo.FileName;
+            String caminho = Server.MapPath(@"upload\");
+            txbNome.Text = nome;
+
+            txbTamanho.Text = fuArquivo.PostedFile.ContentLength.ToString();
+            fuArquivo.PostedFile.SaveAs(caminho + nome);
+        }
+    }
+}
